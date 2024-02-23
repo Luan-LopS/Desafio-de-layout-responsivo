@@ -1,0 +1,100 @@
+
+          HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Carrinho de Compras</title>
+</head>
+<body>
+
+    <div class="produtos">
+        <div class="produto" data-nome="Produto 1" data-preco="10.00">
+            <h3>Produto 1</h3>
+            <p>Preço: $10.00</p>
+            <button class="adicionar">Adicionar ao Carrinho</button>
+        </div>
+        <div class="produto" data-nome="Produto 2" data-preco="15.00">
+            <h3>Produto 2</h3>
+            <p>Preço: $15.00</p>
+            <button class="adicionar">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Adicione mais produtos conforme necessário -->
+    </div>
+
+    <div class="carrinho">
+        <h2>Carrinho de Compras</h2>
+        <ul id="lista-carrinho">
+            <!-- Itens do carrinho serão adicionados dinamicamente aqui -->
+        </ul>
+        <p>Total: $<span id="total">0.00</span></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+              
+
+              CSS
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.produtos, .carrinho {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.produto, #lista-carrinho {
+    list-style: none;
+    padding: 0;
+}
+
+.produto {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+
+.carrinho {
+    max-width: 400px;
+}
+
+.adicionar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+               JAVASCRIPT
+
+
+$(document).ready(function() {
+    $('.adicionar').click(function() {
+        const produto = $(this).closest('.produto');
+        const nome = produto.data('nome');
+        const preco = parseFloat(produto.data('preco'));
+
+        // Adiciona o item ao carrinho
+        const listItem = `<li>${nome} - $${preco.toFixed(2)}</li>`;
+        $('#lista-carrinho').append(listItem);
+
+        // Atualiza o total
+        const totalAtual = parseFloat($('#total').text());
+        const novoTotal = totalAtual + preco;
+        $('#total').text(novoTotal.toFixed(2));
+    });
+});
